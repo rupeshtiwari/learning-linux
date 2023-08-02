@@ -14,6 +14,10 @@
       - [Absolute and Relative Paths](#absolute-and-relative-paths)
     - [Working with files](#working-with-files)
       - [Creating, Moving and Deleting files](#creating-moving-and-deleting-files)
+      - [Case sensitivity](#case-sensitivity)
+      - [Simple Globbing](#simple-globbing)
+    - [Archiving files on the command line](#archiving-files-on-the-command-line)
+      - [Archiving files and dir](#archiving-files-and-dir)
 
 
 # Linux 
@@ -172,6 +176,56 @@ A path is unique location to a file or directory could be specifiy as absolute o
 - `mkdir test`          = creates `test` folder
 - `cp test test3 -r`    = copy `test` dir to `test3` reccursively. 
 - `mv test /tmp/`       = move `test` in `/tmp/` dir
+  
+
+#### Case sensitivity
+
+`touch file File` will create 2 files. 
+
+#### Simple Globbing
+
+Globbing is using partial matching to work with group of section of files or directories. To match pattern by using wild card chars. 
+
+suppose you have `test` dir and 4 files with name `file1 file2 file3 file4` 
+
+`?` = will match any characters
+`?????` = will match any 5 chars 
+`*` = match 0 to any entry (example `ls file*` returns file1 file2 )
+`????[1-3]` = `4 chars` long can be anything ending with numbers `1 to 3` only. 
+`ls *[[:digit:]]`   = returns anything that ends with any number ( return `file1 file2 file3`)
+
+### Archiving files on the command line
+
+#### Archiving files and dir
+
+Why we archive? to backup, for safety, for saving space. Archiving is process to combine multiple files into a single file. In Linux archive is `tar` (tap archive). 
+
+```
+# create 100 files
+for i in {1..100}; do touch file_$i; done
+
+# archive all file* `c` for create `f` for file
+tar cf archive.tar file*
+
+# extract all files from tar
+tar xf archive.tar
+
+
+# delete files
+rm -rf file*
+
+# tail/print files inside tar, t: tail or look the file 
+tar tf archive.tar
+
+# append files to a tar file (appending file4 and file6 in archive.tar file)
+tar rf archive.tar file4 file6
+
+# extract selected file from tar (remove file4 only) this will not delete files from archive 
+tar xf archive.tar file4 
+
+# withdraw files from tar (removes anything with file?) this will not delete files from archive 
+tar xf archive.tar --wildcards "file?"
+```
 
 
 
